@@ -2,10 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+public enum inputJoystick
+{
+    left,
+    right,
+    none
+}
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField] private Image JoystickBG;
     [SerializeField] private Image JoystickCentner;
+    public static inputJoystick _joystickInput = inputJoystick.none;
     private Vector2 inputVector;
     private Vector2 position;
     private void Start()
@@ -34,13 +41,13 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
             JoystickCentner.rectTransform.anchoredPosition = new Vector2(inputVector.x * (JoystickBG.rectTransform.sizeDelta.x / 2), inputVector.y * (JoystickBG.rectTransform.sizeDelta.y / 2));
         }
     }
-    public float HorizontalMove()
+    public inputJoystick HorizontalMove()
     {
         if (inputVector.x > 0)
-            return 1;
+            return _joystickInput = inputJoystick.right;
         if (inputVector.x < 0)
-            return -1;
+            return _joystickInput = inputJoystick.left;
         else
-            return 0;
+            return _joystickInput = inputJoystick.none;
     }
 }
